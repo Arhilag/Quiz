@@ -12,5 +12,4 @@ public class ImageFade : MonoBehaviour
     {
         GetComponent<Image>().DOFade(percent, 1);
     }
-
 }

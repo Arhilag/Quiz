@@ -9,7 +9,5 @@ public class TextAnswer : MonoBehaviour
     void Start()
     {
         GetComponent<Text>().DOFade(1,1.5f);
-        
     }
-
 }

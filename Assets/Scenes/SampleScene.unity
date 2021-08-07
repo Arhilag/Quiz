@@ -193,7 +193,7 @@ MonoBehaviour:
   temporarySettings: []
   variants: []
   answers: []
-  card: {fileID: 4788076532113281034, guid: 6ed4a2d5d8d42434da8668b4f2eceb33, type: 3}
+  card: {fileID: 8989777991086493305, guid: 24a79b928681c4c49bdf6a1df1cb5ac6, type: 3}
   ask: {fileID: 974938592}
   finish: {fileID: 249056453}
   downloadBack: {fileID: 1896420097}

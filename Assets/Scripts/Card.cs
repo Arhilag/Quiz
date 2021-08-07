@@ -5,16 +5,13 @@ using DG.Tweening;
 
 public class Card : MonoBehaviour
 {
-    
     private Spawner spawner;
     private CardData data;
-
     public void Init(CardData _data)
     {
         data = _data;
         GetComponent<SpriteRenderer>().sprite = data.SpriteCard;
     }
-
     public string Name
     {
         get { return data.NameCard; }
