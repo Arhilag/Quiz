@@ -6,30 +6,40 @@ using UnityEngine.UI;
 public class Spawner : MonoBehaviour
 {
     [Tooltip("Список настроек для цифр")]
-    [SerializeField] private List<CardData> cardSettings;
+    [SerializeField] private List<CardData> cardNumbers;
+    [SerializeField] private List<CardData> cardWords;
     [SerializeField] private List<CardData> temporarySettings;
     [SerializeField] private List<CardData> variants;
     [SerializeField] private List<CardData> answers;
-    [SerializeField]
-    private GameObject card;
-    [SerializeField]
-    private Text ask;
-    [SerializeField]
-    private GameObject finish;
-    [SerializeField]
-    private GameObject downloadBack;
-    [SerializeField]
-    private GameObject particles;
+    [SerializeField] private GameObject card;
+    [SerializeField] private Text ask;
+    [SerializeField] private GameObject finish;
+    [SerializeField] private GameObject downloadBack;
+    [SerializeField] private GameObject particles;
+    [SerializeField] public List<CardBase> cardSets = new List<CardBase>(3);
     private string answerName;
-
+    //private List<List<CardData>> cardSets;
     private List<GameObject> Cards;
+    [SerializeField] private List<CardData> choises;
 
-    private float m;
+    private float lvlcount;
 
     private void Start()
     {
         Cards = new List<GameObject>();
+        //cardSets[1].cards = cardNumbers;
+        //cardSets[2].cards = cardWords;
+        ChoiseCards();
         StartCoroutine(NextLvl(0));
+    }
+
+    public void ChoiseCards()
+    {
+        //int randChoise = Random.Range(0, cardSets.Count);
+        //choises = cardSets[randChoise].cards;
+        int randChoise = Random.Range(0, 1);
+        if (randChoise == 0) choises = cardNumbers;
+        else if(randChoise == 1) choises = cardWords;
     }
 
     public bool Сomparison(string name)
@@ -69,21 +79,21 @@ public class Spawner : MonoBehaviour
     public IEnumerator NextLvl(float time)
     {
         yield return new WaitForSeconds(time);
-        if (m == 3) finish.SetActive(true);
+        if (lvlcount == 3) finish.SetActive(true);
         else
         {
             
             variants.Clear();
-            for (int i = 0; i < cardSettings.Count; i++)
+            for (int i = 0; i < choises.Count; i++)
                 {
                 if (answers.Count > 0)
                 {
                     for (int j = 0; j < answers.Count; j++)
                     {
-                        if (cardSettings[i] != answers[j]) temporarySettings.Add(cardSettings[i]);
+                        if (choises[i] != answers[j]) temporarySettings.Add(choises[i]);
                     }
                 }
-                else temporarySettings.Add(cardSettings[i]);
+                else temporarySettings.Add(choises[i]);
             }
 
             for (int i = 0; i < Cards.Count; i++)
@@ -92,8 +102,8 @@ public class Spawner : MonoBehaviour
             }
             particles.SetActive(false);
             Cards.Clear();
-            m++;
-            Spawn(m);
+            lvlcount++;
+            Spawn(lvlcount);
             
         }
     }
@@ -106,9 +116,10 @@ public class Spawner : MonoBehaviour
     private IEnumerator Return()
     {
         downloadBack.SetActive(true);
-        m = 0;
+        lvlcount = 0;
         answerName = null;
         answers.Clear();
+        ChoiseCards();
         StartCoroutine(NextLvl(2));
         yield return new WaitForSeconds(2);
         finish.SetActive(false);
